@@ -1,0 +1,423 @@
+/** {
+	position: relative;
+	z-index: 1;
+}*/
+
+body {
+	font-family: "Open Sans", Arial;
+	font-weight: 300;
+	background: #fff;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+
+header {
+	background: #111;
+	width: 100%;
+	height: 2.2rem;
+	padding: .3rem 1.25rem;
+	position: fixed;
+	z-index: 1000;
+	left: 0;
+	right: 0;
+}
+
+.nav-down {
+	top: 0;
+}
+
+.nav-up {
+	top: -3rem;
+}
+
+header img {
+	margin: .2rem .3rem;
+}
+
+span#name {
+	color: #fff;
+	font-family: Roboto, Arial;
+	font-weight: 200;
+	font-size: 1.5rem;
+	text-align: left;
+	display: inline-block;
+	margin: 0;
+	position: absolute;
+	top: .3rem;
+}
+
+.header {
+	display: none;
+}
+
+nav.drawer {
+	display: block;
+	height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #111; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 1.7rem; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+nav.drawer a {
+	padding: .5rem .5rem .5rem 2rem;
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: #fff;
+    display: block;
+    transition: 0.2s color linear;
+}
+
+button.nav-drawer-btn {
+	color: #fff;
+	background: #000;
+	border: none;
+	display: block;
+
+	font-size: 1.5rem;
+}
+
+button#nav-drawer-open {
+	float: right;
+	margin: 0 10% 0;
+}
+
+@media all and (min-width: 575px){
+	.drawer {
+		display:  none;
+	}
+
+	button.nav-drawer-btn {
+		display: none;
+	}
+
+	nav.header {
+		height: 60%;
+		width: 100%;
+		display: inline-block;
+		margin: 0 0 0 20px;
+		padding: .1rem;
+		position: absolute;
+		top: .5rem;
+		left: 13rem;
+	}
+
+	nav.header a {
+		color: #fff;
+		text-decoration: none;
+		font-size: 1rem;
+
+		display: inline-block;
+		margin: 0 5px;
+		padding-top: 0px;
+		padding: 3px 7px;
+		transition: .2s color linear;
+	}
+}
+
+nav a:hover {
+	color: #ccc;
+}
+
+nav a.current {
+	color: #ccc;
+	pointer-events: none;
+	cursor: default;
+}
+
+main {
+	padding: 40px 10px 30px;
+	width: 90%;
+	margin: 0 auto;
+	flex: 1;
+}
+
+
+div#welcome{
+	font-family: Roboto, Arial;
+	font-weight: 300;
+	font-size: 3.5rem;
+	letter-spacing: .3rem;
+
+	margin: 35vh auto;
+	text-align: center;
+}
+
+
+h1 {
+	font-family: Roboto, Arial;
+	font-weight: 300;
+	font-size: 2rem;
+	position: relative;
+	z-index: 1;
+}
+
+section#main {
+	width: 95%;
+	margin: 0 auto;
+}
+
+h3 {
+	font-family: Roboto, Arial;
+	font-weight: 400;
+}
+
+/*@media all and (min-width: 575px){
+	section#main {
+		column-count: 2;
+	}
+}
+
+@media all and (min-width: 800px) {
+	section#main {
+		column-count: 3;
+	}
+}*/
+
+section.project {
+	padding: 0px 15px 10px;
+	margin: 10px;
+	border-radius: 2px;
+	border: 1px solid #fff;
+
+	display: flex;
+	flex-flow: column wrap;
+
+	transition-timing-function: ease-in;
+	transition-duration:    .1s, 	    .15s,	   .15s;
+	transition-delay: 	   .01s, 	   .01s, 	    0s;
+	transition-property: border, box-shadow, transform;
+}
+
+section.project.collapsed:hover {
+	border: .09em solid #111;
+	box-shadow: .3em .3em #444;
+	transform: translate(-.3em, -.3em);
+}
+
+section.project p {
+	width: 90%;
+	margin: 0 auto;
+}
+
+p {
+	text-align: justify;
+	margin: 2em auto;
+}
+
+a {
+	color: #000;
+}
+
+button.btn-primary {
+	color: #fff;
+	background: #000;
+	border: none;
+
+	display: block;
+	margin: 1em auto;
+	padding: .5em 1em;
+}
+
+button.btn-primary:active {
+	color: #fff;
+	background: #444;
+}
+
+button.btn-primary:focus {
+	/*outline: none;*/
+}
+
+button.expand {
+	margin: 0 auto;
+	display: block;
+	position: absolute;
+	left: 48%;
+	bottom: 1em;
+	visibility: hidden;
+}
+
+button.collapse {
+	margin: 0 auto;
+	display: block;
+	position: absolute;
+	left: 50%;
+	bottom: 1em;
+}
+
+section.expanded {
+	border: .09em solid #111;
+	-webkit-box-shadow: .3em .3em #444;
+	-moz-box-shadow: .3em .3em #444;
+	box-shadow: .3em .3em #444;
+	transform: translate(-.3em, -.3em);
+	border: 1px solid #111;
+	
+	height: 85vh;
+	position: relative;
+	z-index: 4;
+}
+
+section.expanded#bees {
+	/*temp*/
+	border: .09em solid #111;
+	-webkit-box-shadow: .3em .3em #444;
+	-moz-box-shadow: .3em .3em #444;
+	box-shadow: .3em .3em #444;
+	transform: translate(-.3em, -.3em);
+	border: 1px solid #111;
+
+	height: 75rem;
+	position: relative;
+	z-index: 4;
+}
+
+@media all and (min-width: 800px) {
+	section.expanded#bees {
+		/*temp*/
+		border: .09em solid #111;
+		-webkit-box-shadow: .3em .3em #444;
+		-moz-box-shadow: .3em .3em #444;
+		box-shadow: .3em .3em #444;
+		transform: translate(-.3em, -.3em);
+		border: 1px solid #111;
+
+		height: 48rem;
+		position: relative;
+		z-index: 4;
+	}
+}
+
+
+
+.collapsed .hidden-on-close {
+	display: none;
+}
+
+h4 {
+	text-align: center;
+}
+
+
+
+
+
+.project-demo-holder-temp {
+	display: flex;
+	flex-flow: column wrap;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.project-demo-holder-temp img {
+	width: 80%;
+	height: auto;
+	border: .1rem solid #000;
+	margin: .4rem;
+}
+.project-explanation {
+	columns: 1;
+	margin: 1rem 0 0;
+}
+
+.project-explanation p {
+	padding: .3rem .1rem;
+}
+
+@media all and (min-width: 800px) {
+	.project-demo-holder-temp {
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: space-around;
+		align-items: center;
+	}
+
+	.project-demo-holder-temp img {
+		width: 45%;
+		max-width: 35rem;
+		height: auto;
+		border: .1rem solid #000;
+		margin: .4rem;
+	}
+	.project-explanation {
+		columns: 3;
+	}
+}
+
+
+
+.project-demo-holder {
+	display: flex;
+	flex-flow: column wrap;
+	height: 55vh;
+	padding: 1em;
+	position: relative;
+	bottom: 1em;
+}
+
+.speed-range-width {
+	width: 5em;
+}
+
+.controls {
+	display: flex;
+	flex-flow: column wrap;
+	justify-content: space-between;
+	width: 10rem;
+	height: 5rem;
+}
+
+.controls div {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: .1rem .4rem;
+}
+
+input[type=number]{
+    width: 2.5rem;
+} 
+
+@media all and (min-width: 1000px) {
+	.project-demo-holder {
+		flex-flow: row;
+		justify-content: space-between;
+	}
+
+	.controls {
+		height: 17rem;
+		padding: .5rem;
+	}
+
+	.controls div {
+		width: 100%;
+	}
+}
+
+canvas {
+	position: relative;
+}
+
+
+
+footer {
+	
+}
+
+
+
+.hidden {
+	display: none;
+}
+
+
+/** {
+	border: 1px solid black;
+}*/

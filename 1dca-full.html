@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>1D Cellular Automata</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/1dca.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+	<script type="text/javascript" src="js/1dca.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
+</head>
+<body id="o1dca-cellular-automata">
+
+
+	<span><h4 id="o1dca-rule-h4" class="hidden-on-close">Rule __</h4></span>
+	<div id="o1dca-demo-holder-full" class="project-demo-holder hidden-on-close">
+		<canvas id="o1dca-canvas-full"></canvas>
+
+		<table id="#o1dca-controls-full">
+			<tr>
+				<td><label for="rule">Random Rules:</label></td>
+				<td><input type="checkbox" name="random-rule" id="o1dca-random-rules-check" checked="true"></td>
+			</tr>
+			<tr>
+				<td><label for="rule">Rule (0-255):</label></td>
+				<td><input type="number" name="rule" min="0" max="255" size="3" id="o1dca-rule-input" value="30"></td>
+			</tr>
+			<tr>
+				<td><label for="alive-color">Alive Color:</label></td>
+				<td><input type="color" name="alive-color" id="o1dca-alive-color" value="#000000"></td>
+			</tr>
+			<tr>
+				<td><label for="dead-color">Dead Color:</label></td>
+				<td><input type="color" name="dead-color" id="o1dca-dead-color" value="#ffffff"></td>
+			</tr>
+			<tr>
+				<td><label for="speed">Speed:</label></td>
+				<td><input type="range" name="speed" min="0" max="10" step="0.5" id="o1dca-speed" value="4" class="speed-range-width"></td>
+			</tr>
+			<tr>
+				<td colspan="2" class="proj-start-btn"><button type="button" class="btn-primary start" onclick="animate1DCA()">Start</button></td>
+				<!-- <td><button type="button" onclick="playPause()">play/pause</button></td> -->
+			</tr>
+			<tr>
+				<td colspan="2" class="proj-start-btn"><button type="button" class="btn-primary" onclick="reset1DCA()">Reset</button></td>
+			</tr>
+		</table>
+	</div>
+
+
+	<script>
+	var controls = document.getElementById('o1dca-controls-full');
+	$(window).on('mousemove', mouseMoveHandler);
+	function mouseMoveHandler(e) {
+	    if (e.pageX > window.innerWidth * 0.8) {
+	        // Show the menu if mouse is within 20 pixels
+	        // from the left or we are hovering over it
+	        showControls();
+	    }
+	}
+
+	function showControls() {
+		console.log(controls);
+		controls.toggleClass('hidden-controls', 500);
+	}
+
+
+	</script>
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,38 @@
+span {
+	display: block;
+	background: #aaaaaaaa;
+	height: 2rem;
+	width: 6rem;
+	position: fixed;
+	top: 1rem;
+	left: 2rem;
+	text-align: center;
+	z-index: 10;
+}
+
+table#o1dca-controls-full {
+	display: inline-block;
+	position: fixed;
+	right: 10%;
+	z-index: 10;
+}
+
+.hidden-controls {
+	position: fixed;
+	right: -20%;
+}
+
+.center-controls {
+	display: block;
+	position: fixed;
+	margin: 0 auto;
+}
+
+#o1dca-canvas{
+	/*width: 80%;
+	height: 90%;*/
+}
+
+#o1dca-canvas-full {
+	width: 100vw;
+}

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Proj</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script> -->
+</head>
+<body>
+
+	<canvas id="boids-canvas"></canvas>
+
+	<script>
+		window.requestAnimFrame = (function(){
+		  return  window.requestAnimationFrame       ||
+		          window.webkitRequestAnimationFrame ||
+		          window.mozRequestAnimationFrame    ||
+		          function( callback ){
+		          	window.setTimeout(callback, 1000 / 60);
+		          };
+		})();
+
+
+		var canvas = document.getElementById("boids-canvas");
+		var context = canvas.getContext("2d");
+		canvas.width = 800;
+		canvas.height = 700;
+
+		var allBoids = [];
+		var boidCount = 0;
+		var populationSize = 20;
+		var viewDistance = Infinity;
+		var maxSpeed = 3;
+		var maxAcceleration = 0.5;
+
+		function getAngleBetween(a, b) {
+			return Math.atan2(b[1] - a[1], b[0] - a[0]);
+		}
+
+		function getDistanceBetween(a, b){
+			return Math.sqrt(Math.pow(b[0] - a[0], 2) + Math.pow(b[1] - a[1], 2));
+		}
+
+		function Boid(color, initPosition, initVelocity=[0,0]) {
+			this.size = 6;
+			this.color = color;
+			this.position = initPosition;
+			this.velocity = initVelocity;
+			this.id = boidCount++;
+
+			this.prevVelocity = initVelocity;
+			this.maxViewDistance = 200;
+			this.maxAvoidDistance = 20;
+
+			this.applyRules = function() {
+				var numInView = 0;
+				var numInAvoid = 0;
+				var positionPartialSums = [0, 0];
+				var velocityPartialSums = [0, 0];
+				var avoidPartialSums = [0, 0];
+				for (var i = 0; i < allBoids.length; i++){
+					var distance = getDistanceBetween(this.position, allBoids[i].position);
+					if (allBoids[i] != this && distance <= this.maxViewDistance){
+						++numInView;
+						positionPartialSums[0] += allBoids[i].position[0];
+						positionPartialSums[1] += allBoids[i].position[1];
+						velocityPartialSums[0] += allBoids[i].prevVelocity[0];
+						velocityPartialSums[1] += allBoids[i].prevVelocity[1];
+						if (distance <= this.maxAvoidDistance) {
+							++numInAvoid;
+							avoidPartialSums[0] += allBoids[i].position[0] - this.position[0];
+							avoidPartialSums[1] += allBoids[i].position[1] - this.position[1];
+						}
+					}
+				}
+				var avePosition = numInView > 0 ? positionPartialSums.map(x => x/numInView) : this.position;
+				var aveVelocity = numInAvoid > 0 ? velocityPartialSums.map(x => x/numInAvoid) : this.prevVelocity;
+
+				var ruleOneAcceleration = [(avePosition[0] - this.position[0])/100, (avePosition[1] - this.position[1])/100];
+				console.log(this.id, ruleOneAcceleration);
+				var ruleTwoAcceleration = [(aveVelocity[0] - this.prevVelocity[0])/2, (aveVelocity[1] - this.prevVelocity[1])/2];
+				var ruleThreeAcceleration = [-avoidPartialSums[0]/5, -avoidPartialSums[1]/5];
+
+				var newVelocity = [ruleOneAcceleration[0] + ruleTwoAcceleration[0] + ruleThreeAcceleration[0], ruleOneAcceleration[1] + ruleTwoAcceleration[1] + ruleThreeAcceleration[1]];	
+
+				return newVelocity;
+			};
+
+			this.updatePosition = function() {
+				var newVelocity = this.applyRules();
+				this.position[0] += newVelocity[0];
+				this.position[1] += newVelocity[1];
+				this.prevVelocity = newVelocity;
+			};
+
+
+
+
+
+
+
+			// this.calculateAvePosition = function() {
+			// 	// can be improved (if not going to narrow the range)
+			// 	// just calculate the center then subtract own position from allBoids.length * center and then divide by allBoids.length - 1
+			// 	var partialSums = [0, 0];
+			// 	for (var i = 0; i < allBoids.length; i++){
+			// 		if (allBoids[i] != this){
+			// 			partialSums[0] += allBoids[i].position[0];
+			// 			partialSums[1] += allBoids[i].position[1];
+			// 		}
+			// 	}
+			// 	var avePosition = partialSums.map(x => x/allBoids.length);
+			// 	return avePosition;
+			// };
+
+			// this.calculateAveVelocity = function() {
+			// 	//merge this with the above one
+			// 	var partialSums = [0, 0];
+			// 	for (var i = 0; i < allBoids.length; i++){
+			// 		if (allBoids[i] != this){
+			// 			partialSums[0] += allBoids[i].velocity[0];
+			// 			partialSums[1] += allBoids[i].velocity[1];
+			// 		}
+			// 	}
+			// 	var aveVelocity = partialSums.map(x => x/allBoids.length);
+			// 	return aveVelocity;
+			// };
+
+			// //// Boids Algo Rules ////
+			// this.ruleOne = function() { // move to center
+			// 	center = this.calculateAvePosition();
+			// 	angle = getAngleBetween(this.position, center);
+			// 	return angle;
+			// };
+
+			// this.ruleTwo = function() { // avoid
+				
+			// };
+
+			// this.ruleThree = function() { // match velo
+			// 	console.log('two');
+			// 	return this.calculateAveVelocity().map(x => x/2);
+			// };
+
+			// this.applyRules = function() {
+			// 	var angle = this.ruleOne();
+			// 	var centerVelocity = [Math.cos(angle) * maxAcceleration, Math.sin(angle) * maxAcceleration]
+			// 	var aveVelocity = this.ruleThree();
+			// 	var acceleration = [centerVelocity, aveVelocity].reduce((x,y) => [x[0] + y[0], x[1] + y[1]])
+			// 	this.updateVelocity(acceleration);
+			// };
+
+			// ///////////////
+
+			// this.updateVelocity = function(acceleration) {
+			// 	this.velocity[0] += acceleration[0];
+			// 	this.velocity[1] += acceleration[1];
+			// 	var speed = Math.sqrt(Math.pow(this.velocity[0], 2) + Math.pow(this.velocity[1], 2));
+			// 	if (speed > maxSpeed) {
+			// 		this.velocity[0] = this.velocity[0] / speed * maxSpeed;
+			// 		this.velocity[1] = this.velocity[1] / speed * maxSpeed;
+			// 	}
+			// };
+
+			// this.updatePosition = function() {
+			// 	this.applyRules();
+			// 	this.position[0] += this.velocity[0];
+			// 	this.position[1] += this.velocity[1];
+			// 	if (this.position[0] > canvas.width){
+			// 		this.position[0] -= canvas.width;
+			// 	} else if (this.position[0] < 0){
+			// 		this.position[0] += canvas.width;
+			// 	}
+			// 	if (this.position[1] > canvas.height){
+			// 		this.position[1] -= canvas.height;
+			// 	} else if (this.position[1] < 0){
+			// 		this.position[1] += canvas.height;
+			// 	}
+			// };
+
+			this.displaySelf = function() {
+				context.fillStyle = this.color;
+				context.beginPath();
+				context.arc(this.position[0], this.position[1], this.size, 0, 2 * Math.PI);
+				context.fill();
+				context.closePath();
+			};
+
+
+		}
+
+		function getRandomColor(rRange=[0,255], gRange=[0,255], bRange=[0,255]) {
+			return "#" + [rRange, gRange, bRange].map(x => (Math.round(Math.random() * (x[1] - x[0])) + x[0]).toString(16)).map(x => x.length < 2 ? '0' + x : x).join('');
+		}
+
+
+		function initBoids(num) {
+			for (var i = 0; i < num; i++){
+				var color = getRandomColor();
+				var initPosition = [Math.random() * canvas.width, Math.random() * canvas.height];
+				var initVelocity = [Math.random() * 2 - 1, Math.random() * 2 - 1];
+				allBoids.push(new Boid(color, initPosition, initVelocity));
+			}
+		}
+
+		function updateBoids() {
+			for (var i = 0; i < allBoids.length; i++){
+				allBoids[i].updatePosition();
+			}
+		}
+
+		function displayBoids() {
+			for (var i = 0; i < allBoids.length; i++){
+				allBoids[i].displaySelf();
+			}	
+		}
+
+		initBoids(populationSize);
+		function runBoids() {
+			context.clearRect(0,0, context.canvas.width, context.canvas.height);
+			updateBoids();
+			displayBoids();
+			requestAnimFrame(runBoids, canvas);
+		}
+
+		// displayBoids();
+		runBoids();
+		
+
+	</script>
+
+
+	
+
+
+</body>
+</html>

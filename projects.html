@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Projects</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+	<script type="text/javascript" src="js/script.js"></script>
+</head>
+<body>
+	<header class="nav-down">
+		<img src="images/white-bulb.png">
+		<span id="name">Henry Woody</span>
+
+		<nav class="header">
+			<a href="index.html" class="header">Home</a>
+			<a href="projects.html" class="header current">Projects</a>
+			<!-- <a href="interests.html" class="header">Interests</a> -->
+			<a href="contact.html" class="header">Contact</a>
+		</nav>
+
+		<nav class="drawer">
+			<button type="button" class="drawer nav-drawer-btn" onclick="toggleNavDrawer()">&times;</button>
+			<a href="index.html"  class="drawer">Home</a>
+			<a href="projects.html" class="drawer current">Projects</a>
+			<!-- <a href="interests.html" class="drawer">Interests</a> -->
+			<a href="contact.html" class="drawer">Contact</a>
+		</nav>
+
+		<button type="button" class="drawer nav-drawer-btn" id="nav-drawer-open" onclick="toggleNavDrawer()">+</button>
+	</header>
+
+	<main>
+		<h1>Projects</h1>
+
+		<section id="main">
+
+			<p>
+				Projects are my life. I have more stuff on <a href="https://github.com/henrywoody">my github</a>. If you're trying to work on an artificial life project, hit me up.
+			</p>
+			<p>
+				These are a few projects that I've worked on. I think most of them are pretty neat. Enjoy exploring.
+			</p>
+
+			<section class="project collapsed" id="bees" onmouseover="showExpandButton(this)" onmouseleave="hideExpandButton(this)">
+				<div>
+					<h3>Bees</h3>
+
+					<p>
+						They're good workers.
+					</p>
+
+					<div class="project-demo-holder-temp hidden-on-close">
+						<img src="images/bees_preview1.png" alt="Example image of bees.">
+						<img src="images/bees_preview2.png" alt="Another example image of bees.">
+						<div class="project-explanation">
+							<p>
+								Each bee has an artificial neural network for a brain. The network takes in information about the bee's surrounding as input. Bees have five eyes: one in front and two equally spaced on either side. A bee can see another object if it crosses one of its lines of sight. The bee can then see what type of object that thing is, how far away it is, and what direction it is headed (if any). The outputs of the network tell the bee what action to take. A bee can speed up, slow down, turn, grab food, drop food, or attack. These brains were trained over thousands of generations in a genetic algorithm.
+							</p>
+							<p>
+								The queen takes food and creates new bees. These bees can be either workers or fighters. Workers go and collect more food and bring it back to the queen. Fighters attack other bees that are not related.
+							</p>
+							<p>
+								This project was originally coded in Ruby (specifically in jRuby), and I'm working on making a version in JavaScript so it can be shown here.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<button type="button" class="btn-primary expand" onclick="expandElement(this.parentElement)">Expand</button>
+			</section>
+
+			<section class="project collapsed" id="boids" onmouseover="showExpandButton(this)" onmouseleave="hideExpandButton(this)">
+				<div>
+					<h3>Boids</h3>
+
+					<p>
+						Birds of a feather...
+					</p>
+					<p>
+						Original <a href="http://www.cs.toronto.edu/~dt/siggraph97-course/cwr87/">paper</a> by Craig W. Reynolds (1987).
+					</p>
+				</div>
+
+				<div id="boids-demo-holder" class="project-demo-holder hidden-on-close">
+					<canvas id="boids-canvas"></canvas>
+
+					<div class="controls">
+						<div>
+							<label for="population">Pop.</label>
+							<input type="number" name="population" min="0" size="3" id="boids-population-input" value="100">
+						</div>
+
+						<div>
+							<label for="flockingOn">Flocking:</label>
+							<input type="checkbox" name="flockingOn" id="boids-flocking-input" checked>
+						</div>
+
+						<div>
+							<label for="teamsOn">Colors:</label>
+							<input type="checkbox" name="teamsOn" id="boids-teams-input" unchecked>
+						</div>
+
+						<div>
+							<button type="button" class="btn-primary start" id="boids-btn" onclick="animateBoids()">Start</button>
+						</div>
+
+						<div>
+							<button type="button" class="btn-primary" onclick="resetBoids()">Reset</button>
+						</div>
+					</div>
+				</div>
+
+				<button type="button" class="btn-primary expand" onclick="expandElement(this.parentElement)">Expand</button>
+			</section>
+
+			<section class="project collapsed" id="o1dca-cellular-automata" onmouseover="showExpandButton(this)" onmouseleave="hideExpandButton(this)">
+				<div>
+					<h3>Cellular Automata</h3>
+
+					<p>
+						Life at its simplest.
+					</p>
+				</div>
+
+				<h4 id="o1dca-rule-h4" class="hidden-on-close">Rule __</h4>
+				<div id="o1dca-demo-holder" class="project-demo-holder hidden-on-close">
+
+					<canvas id="o1dca-canvas"></canvas>
+
+					<div class="controls">
+						<div>
+							<label for="random-rule">Random Rules:</label>
+							<input type="checkbox" name="random-rule" id="o1dca-random-rules-check" checked>
+						</div>
+
+						<div>
+							<label for="rule">Rule (0-255):</label>
+							<input type="number" name="rule" min="0" max="255" size="3" id="o1dca-rule-input" value="30">
+						</div>
+
+						<div>
+							<label for="alive-color">Alive Color:</label>
+							<input type="color" name="alive-color" id="o1dca-alive-color" value="#000000">
+						</div>
+
+						<div>
+							<label for="dead-color">Dead Color:</label>
+							<input type="color" name="dead-color" id="o1dca-dead-color" value="#ffffff">
+						</div>
+
+						<div>
+							<label for="speed">Speed:</label>
+							<input type="range" name="speed" min="0" max="10" step="0.5" id="o1dca-speed" value="4" class="speed-range-width">
+						</div>
+
+						<div>
+							<button type="button" class="btn-primary start" id="o1dca-btn" onclick="animate1DCA()">Start</button>
+						</div>
+
+						<div>
+							<button type="button" class="btn-primary" onclick="reset1DCA()">Reset</button>
+						</div>
+					</div>
+				</div>
+
+				<button type="button" class="btn-primary expand" onclick="expandElement(this.parentElement)">Expand</button>
+
+			</section>
+
+			<section class="project" id="facts-app">
+				<div>
+					<h3>Facts App</h3>
+
+					<p>
+						You gotta keep learning.
+					</p>
+				</div>
+			</section>
+
+			<section class="project" id="lambda-design">
+				<div>
+					<h3>Lambda Design</h3>
+
+					<p>
+						Neat clothes for neat people. Check it out at <a href="http://www.lambdadesign.io">LambdaDesign.io</a>
+					</p>
+				</div>
+			</section>
+
+			<section class="project" id="snake">
+				<div>
+					<h3>Snake</h3>
+
+					<p>
+						They're hungry bois.
+					</p>
+				</div>
+			</section>
+		</section>
+	</main>
+
+	<footer>
+		<hr>
+
+		<p>
+			&copy; 2018 Henry Woody
+		</p>
+	</footer>
+
+	<script type="text/javascript" src="js/header.js"></script>
+</body>
+</html>
