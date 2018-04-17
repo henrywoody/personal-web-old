@@ -71,19 +71,34 @@ canvas.height = window.innerHeight;
 
 
 var livePoints = [[canvas.width/2, canvas.height, 3 * Math.PI/2]]	
+var symmetric = true;
+var spawnProb = 0.01; //0.1 for crazy fan
+var spawnAngleDiff = Math.PI/6; //needs to be dynamic for crazy fan -- Math.PI/(livePoints.length * 2)
 
 function spawn() {
 	if (livePoints.length < 10000) {
 		var newPoints = [];
-		livePoints.forEach(point => {
-			if (Math.random() < 0.01) {
-				var child1 = [point[0], point[1], point[2] + Math.PI/6];
-				var child2 = [point[0], point[1], point[2] - Math.PI/6];
-				newPoints.push(child1, child2);
+		if (symmetric) {
+			if (Math.random() < spawnProb) {
+				livePoints.forEach(point => {
+					var child1 = [point[0], point[1], point[2] + spawnAngleDiff];
+					var child2 = [point[0], point[1], point[2] - spawnAngleDiff];
+					newPoints.push(child1, child2);
+				})
 			} else {
-				newPoints.push(point);
+				newPoints = livePoints;
 			}
-		})
+		} else {
+			livePoints.forEach(point => {
+				if (Math.random() < spawnProb) {
+					var child1 = [point[0], point[1], point[2] + spawnAngleDiff];
+					var child2 = [point[0], point[1], point[2] - spawnAngleDiff];
+					newPoints.push(child1, child2);
+				} else {
+					newPoints.push(point);
+				}
+			})
+		}
 		livePoints = newPoints;
 	}
 }
@@ -122,7 +137,7 @@ function runWelcome() {
 	// context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 	context.fillStyle = '#000';
 	spawn();
-	modifyDirections();
+	// modifyDirections();
 	movePoints();
 	drawPoints();
 	requestAnimFrame(runWelcome, canvas);
