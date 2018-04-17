@@ -134,20 +134,31 @@ nav a.current {
 
 main {
 	padding: 40px 10px 30px;
-	width: 90%;
+	max-width: 100vw;
+	min-height: 100vh;
 	margin: 0 auto;
 	flex: 1;
 }
 
 
 div#welcome{
+	position: absolute;
+	top: 40vh;
+	left: 30vh;
+	margin: 0 auto;
+	text-align: center;
+}
+
+div#welcome h1 {
 	font-family: Roboto, Arial;
 	font-weight: 300;
 	font-size: 3.5rem;
 	letter-spacing: .3rem;
-
-	margin: 35vh auto;
-	text-align: center;
+	text-shadow:
+		-1px -1px 0 #fff,
+		1px -1px 0 #fff,
+		-1px 1px 0 #fff,
+		1px 1px 0 #fff;
 }
 
 
@@ -160,7 +171,7 @@ h1 {
 }
 
 section#main {
-	width: 95%;
+	/*width: 95%;*/
 	margin: 0 auto;
 }
 
@@ -403,6 +414,12 @@ input[type=number]{
 
 canvas {
 	position: relative;
+}
+
+canvas#index-canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 
 
