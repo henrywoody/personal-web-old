@@ -413,12 +413,12 @@ input[type=number]{
 }
 
 canvas {
-	position: relative;
+	/*position: relative;*/
 }
 
 canvas#index-canvas {
 	position: absolute;
-	top: 0;
+	top: 2.8rem; /* header height */
 	left: 0;
 }
 

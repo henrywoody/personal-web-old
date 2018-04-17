@@ -70,8 +70,7 @@ canvas.height = window.innerHeight;
 // }
 
 
-
-var livePoints = [[canvas.width/2, canvas.height, 3 * Math.PI/2]]
+var livePoints = [[canvas.width/2, canvas.height, 3 * Math.PI/2]]	
 
 function spawn() {
 	if (livePoints.length < 10000) {
@@ -87,6 +86,14 @@ function spawn() {
 		})
 		livePoints = newPoints;
 	}
+}
+
+function modifyDirections() {
+	livePoints.forEach(point => {
+		if (Math.random() < 0.1) {
+			point[2] *= Math.random() < 0.5 ? 1.05 : 0.95;
+		}
+	})
 }
 
 function movePoints() {
@@ -115,6 +122,7 @@ function runWelcome() {
 	// context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 	context.fillStyle = '#000';
 	spawn();
+	modifyDirections();
 	movePoints();
 	drawPoints();
 	requestAnimFrame(runWelcome, canvas);
