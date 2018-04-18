@@ -1,0 +1,15 @@
+html(lang="en")
+	include partials/head.pug
+
+	body
+		include partials/header.pug
+
+		main
+			canvas#index-canvas
+			section#main
+				#welcome
+					h1 welcome
+
+		include partials/footer.pug
+		
+		script(type="text/javascript" src="js/index.js")

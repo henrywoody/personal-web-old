@@ -1,0 +1,140 @@
+html(lang="en")
+	include partials/head.pug
+	
+	script(type="text/javascript" src="js/projects.js")
+	body
+		include partials/header.pug
+
+		main
+			h1 Projects
+
+			section#main
+				p.
+					Projects are my life. I have more stuff on <a href="https://github.com/henrywoody">my github</a>. If you're trying to work on an artificial life project, hit me up.
+
+				p.
+					These are a few projects that I've worked on. I think most of them are pretty neat. Enjoy exploring.
+
+				section#bees.project.collapsed
+					.project-content
+						h2 Bees
+						p They're good workers.
+
+						.project-demo-holder-temp.hidden-on-close
+							img(src="img/bees_preview1.png" alt="Example image of bees.")
+							img(src="img/bees_preview2.png" alt="Another example image of bees.")
+							.project-explanation
+								p.
+									Each bee has an artificial neural network for a brain. The network takes in information about the bee's surrounding as input. Bees have five eyes: one in front and two equally spaced on either side. A bee can see another object if it crosses one of its lines of sight. The bee can then see what type of object that thing is, how far away it is, and what direction it is headed (if any). The outputs of the network tell the bee what action to take. A bee can speed up, slow down, turn, grab food, drop food, or attack. These brains were trained over thousands of generations in a genetic algorithm.
+								p.
+									The queen takes food and creates new bees. These bees can be either workers or fighters. Workers go and collect more food and bring it back to the queen. Fighters attack other bees that are not related.
+								p.
+									This project was originally coded in Ruby (specifically in jRuby), and I'm working on making a version in JavaScript so it can be shown here.
+					
+					button.btn-primary.expand(type="button") Expand
+
+				section#boids.project.collapsed
+					.project-content
+						h2 Boids
+						p Birds of a feather...
+						p Original <a href="http://www.cs.toronto.edu/~dt/siggraph97-course/cwr87/">paper</a> by Craig W. Reynolds (1987).
+
+						#boids-demo-holder.project-demo-holder.hidden-on-close
+							canvas#boids-canvas
+
+							.controls
+								div
+									label(for="population") Pop
+									input#boids-population-input(type="number" name="population" min="0" size="3" value="100")
+
+								div
+									label(for="flockingOn") Flocking
+									input#boids-flocking-input(type="checkbox" name="flockingOn" checked)
+
+								div
+									label(for="teamsOn") Colors
+									input#boids-teams-input(type="checkbox" name="teamsOn" unchecked)
+
+								div
+									button#boids-btn.btn-primary.start(type="button" onclick="animateBoids()") Start
+
+								div
+									button.btn-primary(type="button" onclick="resetBoids()") Reset
+
+					button.btn-primary.expand(type="button") Expand
+
+				section#o1dca.project.collapsed
+					.project-content
+						h2 1D Cellular Automata
+						p Life at its simplest.
+
+						h3#o1dca-rule-h3.hidden-on-close Rule __
+						#o1dca-demo-holder.project-demo-holder.hidden-on-close
+							canvas#o1dca-canvas
+
+							.controls
+								div
+									label(for="random-rule") Random Rules:
+									input(type="checkbox" name="random-rule" id="o1dca-random-rules-check" checked)
+
+								div
+									label(for="rule") Rule (0-255):
+									input(type="number" name="rule" min="0" max="255" size="3" id="o1dca-rule-input" value="30")
+
+								div
+									label(for="alive-color") Alive Color:
+									input(type="color" name="alive-color" id="o1dca-alive-color" value="#000000")
+
+								div
+									label(for="dead-color") Dead Color:
+									input(type="color" name="dead-color" id="o1dca-dead-color" value="#ffffff")
+
+								div
+									label(for="speed") Speed:
+									input(type="range" name="speed" min="0" max="10" step="0.5" id="o1dca-speed" value="4" class="speed-range-width")
+
+								div
+									button#o1dca-btn.btn-primary.start(type="button" onclick="animate1DCA()") Start
+
+								div
+									button.btn-primary(type="button" onclick="reset1DCA()") Reset
+
+					button.btn-primary.expand(type="button") Expand
+
+
+				section#o2dca.project.collapsed
+					.project-content
+						h2 2D Cellular Automata
+						p Things get a bit more complex.
+
+						#o2dca-demo-holder.project-demo-holder.hidden-on-close
+							canvas#o2dca-canvas
+
+							.controls
+								div
+									label(for="rule") Rule:
+									select(name="rule")
+										option(value="game-of-life") Game of Life
+										option(value="game-of-life") Langton Loops
+										option(value="game-of-life") Cyclic
+
+					button.btn-primary.expand(type="button") Expand
+
+
+				script.
+					//- show buttons
+					$('section.project').on({
+						mouseenter: event => {
+							showExpandButton($(event.currentTarget));
+						},
+						mouseleave: event => {
+							hideExpandButton($(event.currentTarget));
+						}
+					});
+					//- buttons
+					$('.btn-primary.expand').on('click', event => {
+						expandElement($(event.currentTarget).parent());
+					})
+
+
+		include partials/footer.pug

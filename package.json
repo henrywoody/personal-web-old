@@ -1,0 +1,23 @@
+{
+  "name": "henrywoody.com",
+  "version": "1.0.0",
+  "description": "Personal website",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/henrywoody/personal-web.git"
+  },
+  "author": "Henry Woody",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/henrywoody/personal-web/issues"
+  },
+  "homepage": "https://github.com/henrywoody/personal-web#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "pug": "^2.0.3"
+  }
+}

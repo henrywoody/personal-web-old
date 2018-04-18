@@ -1,0 +1,26 @@
+header
+	img(src="img/white-bulb.png")
+	span#name Henry Woody
+	
+	nav.header
+		a.header(href="/") Home
+		a.header(href="/projects") Projects
+
+	nav.drawer
+		button(type="button" class="drawer nav-drawer-btn" onclick="toggleNavDrawer()") &times;
+		a.drawer(href="/") Home
+		a.drawer(href="/projects") Projects
+
+	button(type="button" class="drawer nav-drawer-btn" id="nav-drawer-open" onclick="toggleNavDrawer()") +
+
+	script.
+		//- make the current tab have the #current id
+		var rootOfCurrentPath = window.location.pathname.match(RegExp('/[a-z]*'))[0];
+		for (var i = 0; i < $('nav a').length; i++){
+			var aPath = $('nav a')[i].href.match(RegExp("(?<=" + window.location.host + ")/[a-z]*"))[0];
+			if (aPath === rootOfCurrentPath) {
+				$('nav a:nth-of-type(' + (i + 1) + ')').addClass('current');
+			}
+		}
+
+	script(type="text/javascript" src="js/header.js")

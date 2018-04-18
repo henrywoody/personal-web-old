@@ -208,7 +208,7 @@ function changeUpdateToStartButton() {
 }
 
 function update_rule_text() {
-	document.getElementById("o1dca-rule-h4").innerHTML = "Rule " + rule;
+	document.getElementById("o1dca-rule-h3").innerHTML = "Rule " + rule;
 }
 
 

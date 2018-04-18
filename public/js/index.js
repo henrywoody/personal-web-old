@@ -70,7 +70,7 @@ canvas.height = window.innerHeight;
 // }
 
 
-var livePoints = [[canvas.width/2, canvas.height, 3 * Math.PI/2]]	
+var livePoints = [[canvas.width/2, canvas.height, 3 * Math.PI/2]]
 var symmetric = true;
 var spawnProb = 0.01; //0.1 for crazy fan
 var spawnAngleDiff = Math.PI/6; //needs to be dynamic for crazy fan -- Math.PI/(livePoints.length * 2)
