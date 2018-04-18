@@ -69,10 +69,31 @@ canvas.height = window.innerHeight;
 // 	}
 // }
 
+// function runWelcome() {
+// 	// context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+// 	context.fillStyle = '#000000';
+// 	spawn();
+// 	drawPoints();
+// 	requestAnimFrame(runWelcome, canvas);
+// }
+
+// runWelcome();
+
+
+
+
+
+
+
+
+
+
+
+// ==================================
 
 var livePoints = [[canvas.width/2, canvas.height, 3 * Math.PI/2]]
 var symmetric = true;
-var spawnProb = 0.01; //0.1 for crazy fan
+var spawnProb = 0.015; //0.1 for crazy fan
 var spawnAngleDiff = Math.PI/6; //needs to be dynamic for crazy fan -- Math.PI/(livePoints.length * 2)
 
 function spawn() {
@@ -132,15 +153,20 @@ function drawPoints() {
 
 
 
-
+var generation = 0;
+var fadeOutTime = 900;
 function runWelcome() {
 	// context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-	context.fillStyle = '#000';
-	spawn();
-	// modifyDirections();
-	movePoints();
-	drawPoints();
-	requestAnimFrame(runWelcome, canvas);
+
+	if (generation < fadeOutTime) {
+		context.fillStyle = '#000000';
+		context.globalAlpha = ((fadeOutTime - generation++)/fadeOutTime);
+		spawn();
+		// modifyDirections();
+		movePoints();
+		drawPoints();
+		requestAnimFrame(runWelcome, canvas);
+	}
 }
 
 runWelcome();
