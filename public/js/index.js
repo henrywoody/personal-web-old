@@ -91,7 +91,13 @@ canvas.height = window.innerHeight;
 
 // ==================================
 
-var livePoints = [[canvas.width/2, canvas.height, 3 * Math.PI/2]]
+// var livePoints = [[canvas.width/2, canvas.height, 3 * Math.PI/2]]; //bottom
+var numPoints = Math.round(Math.random() * 2 + 1) * 2;
+var livePoints = [];
+for (var n = 0; n < numPoints; n++) {
+	livePoints.push([canvas.width/2, canvas.height/2, 2*n * Math.PI/numPoints]);
+}
+
 var symmetric = true;
 var spawnProb = 0.015; //0.1 for crazy fan
 var spawnAngleDiff = Math.PI/6; //needs to be dynamic for crazy fan -- Math.PI/(livePoints.length * 2)
@@ -159,7 +165,7 @@ function runWelcome() {
 	// context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
 	if (generation < fadeOutTime) {
-		context.fillStyle = '#000000';
+		context.fillStyle = '#ffffff'; /*night mode*/
 		context.globalAlpha = ((fadeOutTime - generation++)/fadeOutTime);
 		spawn();
 		// modifyDirections();

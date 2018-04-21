@@ -154,11 +154,12 @@ div#welcome h1 {
 	font-weight: 300;
 	font-size: 3.5rem;
 	letter-spacing: .3rem;
-	text-shadow:
-		-1px -1px 0 #fff,
-		1px -1px 0 #fff,
-		-1px 1px 0 #fff,
-		1px 1px 0 #fff;
+	color: #fff; /*night mode*/
+	text-shadow: /*night mode*/
+		-1px -1px 0 #111,
+		1px -1px 0 #111,
+		-1px 1px 0 #111,
+		1px 1px 0 #111;
 }
 
 
