@@ -9,7 +9,7 @@ const app = express();
 // More Imports
 // ====================
 const bodyParser = require('body-parser');
-// app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: true}));
 const path = require('path');
 const http = require('http');
 const createGitHandler = require('github-webhook-handler');
@@ -52,6 +52,7 @@ app.post('/github-payload', (req, res) => {
 		res.statusCode = 401;
 	})
 	shell.exec('git pull');
+	shell.exec('npm install');
 })
 
 
