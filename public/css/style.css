@@ -7,7 +7,7 @@ body {
 	font-family: "Open Sans", Arial;
 	font-weight: 300;
 	background: #fff;
-	min-height: 100vh;
+	/*min-height: 100vh;*/ /*aaaa*/
 }
 
 
@@ -132,7 +132,7 @@ nav a.current {
 }
 
 main {
-	padding: 3rem 1rem 2rem;
+	/*padding: 3rem 1rem 2rem;*/ /*aaaaa*/  
 	width: 85%;
 	max-width: 100vw;
 	/*min-height: 100vh;*/
