@@ -108,7 +108,7 @@ function setPoints() {
 }
 
 function addPointSet(pointSets, id) {
-	pointSets.push([id, 1, setPoints()]);
+	pointSets.push({id: id, alpha: 1, age: 0, pointSet: setPoints()});
 	return pointSets;
 }
 
@@ -138,25 +138,6 @@ function split(livePoints) {
 	} else {
 		return livePoints;
 	}
-
-	// return [livePoints.map(point => {
-	// 	let split = false;
-	// 	let { x,y,d } = livePoints;
-	// 	if (Math.random() < splitProb) {
-	// 		split = true;
-	// 		child = [point[0], point[1], point[2] + splitAngleDiff];
-	// 		child = [point[], point[1], point[2] - splitAngleDiff];
-	// 	}
-	// 	return [x,y,d]
-	// })
-	// if (livePoints.length < maxPointSetSize) {
-	// 	var newPoints = [];
-	// 	if (symmetric) {
-			
-	// 	}
-	// 	livePoints = newPoints;
-	// }
-	// return split;
 }
 
 function randomizeDirections(livePoints) {
@@ -198,10 +179,12 @@ var splitProb = stepSize/2 * 0.015;
 var angleChoices = [2,3,4,6,10].map(x => Math.PI/x);
 var splitAngleDiff = angleChoices[Math.round(Math.random() * (angleChoices.length - 1))];
 var pointSets = [];
-var maxPointSetSize = 2**8;
+var maxPointSetSize = 2**7;
+var maxAge = 1500
 
 var generation = 0;
 var fadeOutTime = 900;
+var fadeFactor = 1.25;
 var phaseTime = 500;
 var phaseIndex = 0;
 var refreshTime = Math.round(Math.log(stepSize)) + 1;
@@ -250,14 +233,14 @@ pointSets = addPointSet(pointSets, phaseIndex);
 
 function runWelcome() {
 	if (generation % refreshTime == 0) {
-		pointSets = pointSets.map((id_pointSet) => {
-			let [id, alpha, pointSet] = id_pointSet;
+		pointSets = pointSets.map(info => {
+			let { id, alpha, age, pointSet } = info;
 
 			let newAlpha = alpha;
 			let before = pointSet.length;
 			pointSet = split(pointSet);
 			if  (pointSet.length > before) {
-				newAlpha /= 1.2;
+				newAlpha /= fadeFactor;
 			}
 
 			// randomizeDirections(pointSet);
@@ -269,21 +252,33 @@ function runWelcome() {
 			context.fillStyle = phases[id][0]; /*night mode*/
 			context.globalAlpha = newAlpha;
 			drawPoints(pointSet);
-			return [id, newAlpha, pointSet]
+			return {id: id, alpha: newAlpha, age: ++age, pointSet: pointSet}
 		})
 	}
 		
 	if (generation++ >= phaseTime) {
 		phaseIndex = (phaseIndex + 1) % phases.length;
-				if (phaseIndex % 3 == 0) {
-			// context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-		}
+		// if (phaseIndex % 3 == 0) {
+		// 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+		// }
 
 		pointSets = addPointSet(pointSets, phaseIndex);
 
 		// reset counter
 		generation = 0;
 	}
+
+	// remove old ones
+	let toRemove = pointSets.map(info => {
+		let { age } = info;
+		if (age++ > maxAge)
+			return true;
+	})
+	for (var i = 0; i < pointSets.length; i++) {
+		if (toRemove[i])
+			pointSets.splice(i, 1);
+	}
+
 	requestAnimFrame(runWelcome, canvas);
 }
 
