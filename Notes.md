@@ -1,5 +1,11 @@
 # Notes
 
+## Veins
+
+branching like now but with vectors instead of just endpoints. establish the pathways (like what it does now) then run pulses down the pathways
+
+
+
 Is fun. Designing the path through the app.
 
 

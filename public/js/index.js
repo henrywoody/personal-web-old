@@ -91,13 +91,6 @@ canvas.height = window.innerHeight;
 
 // ==================================
 
-// var livePoints = [[canvas.width/2, canvas.height, 3 * Math.PI/2]]; //bottom
-// var numPoints = Math.round(Math.random() * 2 + 1) * 2;
-// var livePoints = [];
-// for (var n = 0; n < numPoints; n++) {
-// 	livePoints.push([canvas.width/2, canvas.height/2, 2*n * Math.PI/numPoints]);
-// }
-
 function setPoints() {
 	var numPoints = Math.round(Math.random() * 2 + 1) * 2;
 	var points = [];
@@ -111,17 +104,6 @@ function addPointSet(pointSets, id) {
 	pointSets.push({id: id, alpha: 1, age: 0, pointSet: setPoints()});
 	return pointSets;
 }
-
-// Asymmetric Split //
-// livePoints.forEach(point => {
-// 	if (Math.random() < splitProb) {
-// 		var child1 = [point[0], point[1], point[2] + splitAngleDiff];
-// 		var child2 = [point[0], point[1], point[2] - splitAngleDiff];
-// 		newPoints.push(child1, child2);
-// 	} else {
-// 		newPoints.push(point);
-// 	}
-// })
 
 function split(livePoints) {
 	if (livePoints.length <= maxPointSetSize && Math.random() < splitProb) {
@@ -180,13 +162,15 @@ var angleChoices = [2,3,4,6,10].map(x => Math.PI/x);
 var splitAngleDiff = angleChoices[Math.round(Math.random() * (angleChoices.length - 1))];
 var pointSets = [];
 var maxPointSetSize = 2**7;
-var maxAge = 1500
+var maxAge = 5000
 
 var generation = 0;
 var fadeOutTime = 900;
-var fadeFactor = 1.25;
-var phaseTime = 500;
+var fadeFactor = 1.3;
+var phaseTime = 750;
 var phaseIndex = 0;
+var totalPhases = 0;
+var maxPhases = 2;
 var refreshTime = Math.round(Math.log(stepSize)) + 1;
 
 // seafoam
@@ -214,6 +198,11 @@ var phases = [
 	['#963d97']
 ];
 
+var phases = [
+	['#ffffff'],
+	['#ffd700'], //gold
+]
+
 // fire & ice
 // var phases = [
 // 	// blues
@@ -227,9 +216,8 @@ var phases = [
 // ]
 
 
-
 pointSets = addPointSet(pointSets, phaseIndex);
-
+totalPhases++;
 
 function runWelcome() {
 	if (generation % refreshTime == 0) {
@@ -257,15 +245,17 @@ function runWelcome() {
 	}
 		
 	if (generation++ >= phaseTime) {
-		phaseIndex = (phaseIndex + 1) % phases.length;
-		// if (phaseIndex % 3 == 0) {
-		// 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-		// }
+		if (totalPhases++ < maxPhases) {
+			phaseIndex = (phaseIndex + 1) % phases.length;
+			// if (phaseIndex % 3 == 0) {
+			// 	context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+			// }
 
-		pointSets = addPointSet(pointSets, phaseIndex);
+			pointSets = addPointSet(pointSets, phaseIndex);
 
-		// reset counter
-		generation = 0;
+			// reset counter
+			generation = 0;
+		}
 	}
 
 	// remove old ones
